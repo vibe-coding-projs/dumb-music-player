@@ -133,11 +133,12 @@ def download_from_youtube(youtube_url, output_path, thumbnail_path=None):
         strategies.append(("cookies.txt file", strategy_opts))
 
     # Strategy 2: Try Chrome browser cookies (only works locally)
-    chrome_check = Path.home() / '.config' / 'google-chrome'
-    if chrome_check.exists() or Path('/Applications/Google Chrome.app').exists():
-        strategy_opts = ydl_opts.copy()
-        strategy_opts['cookiesfrombrowser'] = ('chrome',)
-        strategies.append(("Chrome browser cookies", strategy_opts))
+    # DISABLED: Chrome cookie extraction hangs on macOS due to Keychain issues
+    # chrome_check = Path.home() / '.config' / 'google-chrome'
+    # if chrome_check.exists() or Path('/Applications/Google Chrome.app').exists():
+    #     strategy_opts = ydl_opts.copy()
+    #     strategy_opts['cookiesfrombrowser'] = ('chrome',)
+    #     strategies.append(("Chrome browser cookies", strategy_opts))
 
     # Strategy 3: Try without cookies (fallback)
     strategies.append(("no authentication", ydl_opts.copy()))
