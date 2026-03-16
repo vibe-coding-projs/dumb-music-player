@@ -75,16 +75,9 @@
 
     </div>
 
-    <details style="margin-top: 10px; background: #fff3cd; border: 1px solid #ffc107; border-radius: 6px; padding: 10px 14px;">
-        <summary style="cursor: pointer; font-weight: bold;">🔄 שיטה חלופית — דרך לשונית Application (אם לא מוצאים את cookie: ב-Headers)</summary>
-        <ol style="margin-top: 10px; line-height: 1.9;">
-            <li>פתח DevTools (<kbd style="background:#e9ecef;border:1px solid #ccc;border-radius:3px;padding:1px 5px;font-family:monospace;">F12</kbd>) ← לחץ על הלשונית <strong>Application</strong></li>
-            <li>בתפריט השמאלי, פתח את <strong>Storage</strong> ← <strong>Cookies</strong> ← לחץ על <code style="background:#e9ecef;padding:1px 4px;border-radius:3px;">https://www.youtube.com</code></li>
-            <li>תראה טבלה עם כל ה-cookies. פתח את Console (<kbd style="background:#e9ecef;border:1px solid #ccc;border-radius:3px;padding:1px 5px;font-family:monospace;">Ctrl+`</kbd> או לשונית Console) והדבק:</li>
-        </ol>
-        <pre style="background:#1e1e1e;color:#d4d4d4;padding:10px;border-radius:5px;font-size:13px;direction:ltr;text-align:left;margin:8px 0;">copy([...document.cookie.split('; ')].join('; '))</pre>
-        <p style="margin: 6px 0 0; font-size: 13px; color: #856404;">לחץ Enter — הערך יועתק ללוח האחסון. הדבק אותו ישירות בתיבה למטה.</p>
-    </details>
+    <div style="margin-top: 10px; background: #f8d7da; border: 1px solid #f5c2c7; border-radius: 6px; padding: 10px 14px; font-size: 13px;">
+        ⚠️ <strong>שימו לב:</strong> יש להעתיק את הערך מלשונית <strong>Network → Headers</strong> בלבד (שיטה מעלה). שיטות אחרות כמו <code style="background:#e9ecef;padding:1px 4px;border-radius:3px;">document.cookie</code> בקונסול <strong>לא עובדות</strong> — הן מפספסות את ה-cookies החשובים ביותר (httpOnly) שיוטיוב משתמש בהם לאימות.
+    </div>
 
     <h3 style="margin-top: 20px;">אפשרות 2 — פורמט Netscape (cookies.txt)</h3>
     <ol style="line-height: 1.8;">
