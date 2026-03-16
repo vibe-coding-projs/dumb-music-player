@@ -37,21 +37,23 @@
         <div style="display: flex; align-items: flex-start; margin-bottom: 14px; gap: 12px;">
             <div style="background: #0d6efd; color: white; border-radius: 50%; width: 28px; height: 28px; display: flex; align-items: center; justify-content: center; font-weight: bold; flex-shrink: 0;">2</div>
             <div>
-                לחץ <kbd style="background:#e9ecef;border:1px solid #ccc;border-radius:3px;padding:1px 5px;font-family:monospace;">F5</kbd> לרענון הדף. תראה רשימת בקשות מתמלאת בלוח ה-Network.
+                בסרגל הפילטרים שמתחת ללשוניות, לחץ על <strong>Doc</strong> (קיצור של Document). זה מסנן ומציג רק את הבקשה הראשית של הדף — רק בה יש cookies.
+                <br><span style="color: #6c757d; font-size: 13px;">אם אינך רואה "Doc" — חפש את הכפתורים: All / Fetch/XHR / JS / CSS / Img / <strong>Doc</strong></span>
             </div>
         </div>
 
         <div style="display: flex; align-items: flex-start; margin-bottom: 14px; gap: 12px;">
             <div style="background: #0d6efd; color: white; border-radius: 50%; width: 28px; height: 28px; display: flex; align-items: center; justify-content: center; font-weight: bold; flex-shrink: 0;">3</div>
             <div>
-                לחץ על <strong>כל בקשה בשורה הראשונה</strong> ברשימה (לרוב שם כמו <code style="background:#e9ecef;padding:1px 4px;border-radius:3px;">www.youtube.com</code> או <code style="background:#e9ecef;padding:1px 4px;border-radius:3px;">youtube.com</code>). ייפתח פאנל מימין.
+                לחץ <kbd style="background:#e9ecef;border:1px solid #ccc;border-radius:3px;padding:1px 5px;font-family:monospace;">F5</kbd> לרענון הדף. תראה בקשה אחת בשם <code style="background:#e9ecef;padding:1px 4px;border-radius:3px;">www.youtube.com</code> — לחץ עליה.
             </div>
         </div>
 
         <div style="display: flex; align-items: flex-start; margin-bottom: 14px; gap: 12px;">
             <div style="background: #0d6efd; color: white; border-radius: 50%; width: 28px; height: 28px; display: flex; align-items: center; justify-content: center; font-weight: bold; flex-shrink: 0;">4</div>
             <div>
-                בפאנל שנפתח, לחץ על הלשונית <strong>Headers</strong>. גלול מטה עד שתמצא את הכותרת <strong>Request Headers</strong>. שם תראה שורה שמתחילה ב־<code style="background:#e9ecef;padding:1px 4px;border-radius:3px;">cookie:</code> (עם ערך ארוך מאוד).
+                בפאנל שנפתח מימין, לחץ על הלשונית <strong>Headers</strong>. גלול מטה עד לחלק <strong>Request Headers</strong>. תראה שורה שמתחילה ב־<code style="background:#e9ecef;padding:1px 4px;border-radius:3px;">cookie:</code> עם ערך ארוך מאוד.
+                <br><span style="color: #6c757d; font-size: 13px;">אין שורת cookie? ודא שאתה מחובר ל-YouTube לפני הרענון.</span>
             </div>
         </div>
 
@@ -72,6 +74,17 @@
         </div>
 
     </div>
+
+    <details style="margin-top: 10px; background: #fff3cd; border: 1px solid #ffc107; border-radius: 6px; padding: 10px 14px;">
+        <summary style="cursor: pointer; font-weight: bold;">🔄 שיטה חלופית — דרך לשונית Application (אם לא מוצאים את cookie: ב-Headers)</summary>
+        <ol style="margin-top: 10px; line-height: 1.9;">
+            <li>פתח DevTools (<kbd style="background:#e9ecef;border:1px solid #ccc;border-radius:3px;padding:1px 5px;font-family:monospace;">F12</kbd>) ← לחץ על הלשונית <strong>Application</strong></li>
+            <li>בתפריט השמאלי, פתח את <strong>Storage</strong> ← <strong>Cookies</strong> ← לחץ על <code style="background:#e9ecef;padding:1px 4px;border-radius:3px;">https://www.youtube.com</code></li>
+            <li>תראה טבלה עם כל ה-cookies. פתח את Console (<kbd style="background:#e9ecef;border:1px solid #ccc;border-radius:3px;padding:1px 5px;font-family:monospace;">Ctrl+`</kbd> או לשונית Console) והדבק:</li>
+        </ol>
+        <pre style="background:#1e1e1e;color:#d4d4d4;padding:10px;border-radius:5px;font-size:13px;direction:ltr;text-align:left;margin:8px 0;">copy([...document.cookie.split('; ')].join('; '))</pre>
+        <p style="margin: 6px 0 0; font-size: 13px; color: #856404;">לחץ Enter — הערך יועתק ללוח האחסון. הדבק אותו ישירות בתיבה למטה.</p>
+    </details>
 
     <h3 style="margin-top: 20px;">אפשרות 2 — פורמט Netscape (cookies.txt)</h3>
     <ol style="line-height: 1.8;">
