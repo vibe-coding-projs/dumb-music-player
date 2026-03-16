@@ -504,6 +504,29 @@ def admin_delete_song(song_id):
     return redirect(url_for('admin_dashboard'))
 
 
+def _is_netscape_cookies(content):
+    """Return True if content looks like Netscape cookie format."""
+    lines = [l.strip() for l in content.split('\n') if l.strip()]
+    return any(l.startswith('#') or '\t' in l for l in lines)
+
+
+def _convert_raw_cookies_to_netscape(raw):
+    """Convert a raw Cookie header value (key=val; key2=val2) to Netscape format."""
+    import time
+    far_future = int(time.time()) + 60 * 60 * 24 * 365 * 5  # 5 years
+    lines = ['# Netscape HTTP Cookie File', '# Converted from raw Cookie header by dumb-music-player', '']
+    for pair in raw.split(';'):
+        pair = pair.strip()
+        if not pair or '=' not in pair:
+            continue
+        name, _, value = pair.partition('=')
+        name = name.strip()
+        value = value.strip()
+        # domain / flag / path / secure / expiry / name / value
+        lines.append(f'.youtube.com\tTRUE\t/\tFALSE\t{far_future}\t{name}\t{value}')
+    return '\n'.join(lines) + '\n'
+
+
 @app.route('/admin/cookies', methods=['GET', 'POST'])
 def admin_cookies():
     """Manage cookies.txt file for YouTube authentication."""
@@ -534,11 +557,15 @@ def admin_cookies():
                                      current_cookies=current_cookies,
                                      cookies_exist=cookies_exist)
 
-            # Basic validation - check if it looks like Netscape cookie format
-            lines = [line.strip() for line in cookies_content.split('\n') if line.strip()]
-            if not any(line.startswith('#') or '\t' in line for line in lines):
+            # Auto-detect format and convert raw Cookie header → Netscape if needed
+            if _is_netscape_cookies(cookies_content):
+                pass  # already Netscape format
+            elif ';' in cookies_content or '=' in cookies_content:
+                cookies_content = _convert_raw_cookies_to_netscape(cookies_content)
+                print("[COOKIES] Detected raw Cookie header — converted to Netscape format", flush=True)
+            else:
                 return render_template('admin_cookies.html',
-                                     error='הפורמט של ה-cookies נראה לא תקין. צריך להיות בפורמט Netscape',
+                                     error='הפורמט של ה-cookies נראה לא תקין. יש להדביק פורמט Netscape או Cookie header גולמי.',
                                      current_cookies=current_cookies,
                                      cookies_exist=cookies_exist)
 
