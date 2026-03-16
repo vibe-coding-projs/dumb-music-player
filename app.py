@@ -103,7 +103,8 @@ def search_youtube(query, num_results=5):
 
 
 def download_from_youtube(youtube_url, output_path, thumbnail_path=None):
-    """Download audio from YouTube as MP3 and optionally save thumbnail."""
+    """Download audio from YouTube as MP3 and optionally save thumbnail.
+    Returns True on success, False if all strategies fail."""
     print(f"  [download_from_youtube] Starting download for: {youtube_url}", flush=True)
 
     # Check if cookies file exists
@@ -122,6 +123,7 @@ def download_from_youtube(youtube_url, output_path, thumbnail_path=None):
         'writethumbnail': True if thumbnail_path else False,
         'extract_audio': True,
         'extractor_args': {'youtube': {'player_client': ['ios', 'android', 'web']}},
+        'js_runtimes': ['node', 'deno'],
     }
 
     # Try multiple strategies for cookie authentication
