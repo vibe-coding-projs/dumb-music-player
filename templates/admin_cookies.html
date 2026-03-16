@@ -23,12 +23,20 @@
     <h2>מה זה Cookies ולמה צריך אותם?</h2>
     <p>YouTube Cookies מאפשרים להוריד שירים שמוגבלים גיאוגרפית או דורשים אימות.</p>
 
-    <h3>איך לייצא Cookies מהדפדפן?</h3>
+    <h3>אפשרות 1 — Cookie header גולמי (ללא תוסף, מומלץ!)</h3>
+    <ol style="line-height: 1.8;">
+        <li>פתח YouTube בדפדפן → לחץ F12 → לשונית <strong>Network</strong></li>
+        <li>רענן את הדף ולחץ על כל בקשה ל-youtube.com</li>
+        <li>תחת <strong>Request Headers</strong> → מצא את השורה <code>Cookie:</code></li>
+        <li>העתק את <strong>הערך בלבד</strong> (ה-key=value; key2=value2...)</li>
+        <li>הדבק בתיבת הטקסט למטה — המערכת תמיר אוטומטית לפורמט הנכון</li>
+    </ol>
+
+    <h3 style="margin-top: 20px;">אפשרות 2 — פורמט Netscape (cookies.txt)</h3>
     <ol style="line-height: 1.8;">
         <li>התקן את התוסף <strong>"Get cookies.txt LOCALLY"</strong> ב-Chrome/Firefox</li>
         <li>היכנס ל-YouTube בדפדפן</li>
-        <li>לחץ על אייקון התוסף בעת שאתה באתר YouTube</li>
-        <li>לחץ על <strong>"Export"</strong> או <strong>"Copy to Clipboard"</strong></li>
+        <li>לחץ על אייקון התוסף בעת שאתה באתר YouTube ולחץ <strong>"Export"</strong></li>
         <li>הדבק את התוכן בתיבת הטקסט למטה</li>
     </ol>
 
@@ -58,20 +66,28 @@
 
     <h3>העלה/הדבק Cookies חדש</h3>
 
+    <div style="background: #e8f4fd; border: 1px solid #bee5eb; border-radius: 6px; padding: 12px; margin-bottom: 14px; font-size: 14px;">
+        💡 <strong>שני פורמטים נתמכים:</strong><br>
+        • <strong>Cookie header גולמי</strong> — הדבק ישירות מ-DevTools (למשל: <code style="font-size: 12px;">YSC=abc123; VISITOR_INFO1_LIVE=xyz</code>)<br>
+        • <strong>פורמט Netscape</strong> — קובץ cookies.txt שיוצא מהתוסף (מתחיל ב-<code style="font-size: 12px;"># Netscape HTTP Cookie File</code>)
+    </div>
+
     <label for="cookies_content" style="display: block; margin-bottom: 10px; font-weight: bold;">
-        תוכן cookies.txt (פורמט Netscape):
+        הדבק כאן Cookie header גולמי או תוכן cookies.txt:
     </label>
 
     <textarea
         id="cookies_content"
         name="cookies_content"
         rows="15"
-        placeholder="# Netscape HTTP Cookie File
-# This is a generated file! Do not edit.
+        placeholder="Cookie header גולמי (מ-DevTools):
+YSC=abc123; VISITOR_INFO1_LIVE=xyz789; SID=abc...
 
-.youtube.com	TRUE	/	TRUE	1234567890	CONSENT	YES+cb
-.youtube.com	TRUE	/	FALSE	1234567890	VISITOR_INFO1_LIVE	abcdefg123
-..."
+— או —
+
+פורמט Netscape (מהתוסף):
+# Netscape HTTP Cookie File
+.youtube.com	TRUE	/	FALSE	1234567890	VISITOR_INFO1_LIVE	abcdefg123"
         style="font-family: monospace; font-size: 14px; direction: ltr; text-align: left; white-space: pre; overflow-x: auto;"
     >{{ current_cookies if current_cookies and not '... (truncated)' in current_cookies else '' }}</textarea>
 
