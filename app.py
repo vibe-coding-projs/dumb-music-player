@@ -121,6 +121,7 @@ def download_from_youtube(youtube_url, output_path, thumbnail_path=None):
         'no_warnings': False,
         'writethumbnail': True if thumbnail_path else False,
         'extract_audio': True,
+        'extractor_args': {'youtube': {'player_client': ['android', 'web']}},
     }
 
     # Try multiple strategies for cookie authentication
