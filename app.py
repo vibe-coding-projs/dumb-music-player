@@ -103,13 +103,14 @@ def search_youtube(query, num_results=5):
 
 
 def download_from_youtube(youtube_url, output_path, thumbnail_path=None):
-    """Download audio from YouTube as MP3 and optionally save thumbnail."""
+    """Download audio from YouTube as MP3 and optionally save thumbnail.
+    Returns True on success, False if all strategies fail."""
     print(f"  [download_from_youtube] Starting download for: {youtube_url}", flush=True)
 
     # Check if cookies file exists
     print(f"  [download_from_youtube] Checking for cookies.txt at {COOKIES_FILE}... {'FOUND' if COOKIES_FILE.exists() else 'NOT FOUND'}", flush=True)
 
-    ydl_opts = {
+    base_opts = {
         'format': 'bestaudio[ext=m4a]/bestaudio[ext=webm]/bestaudio/best',
         'postprocessors': [{
             'key': 'FFmpegExtractAudio',
@@ -121,27 +122,30 @@ def download_from_youtube(youtube_url, output_path, thumbnail_path=None):
         'no_warnings': False,
         'writethumbnail': True if thumbnail_path else False,
         'extract_audio': True,
+        'http_headers': {
+            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125.0.0.0 Safari/537.36',
+            'Accept-Language': 'en-US,en;q=0.9',
+        },
     }
 
-    # Try multiple strategies for cookie authentication
+    # Build strategies: each tries a different player_client, with and without cookies
+    # tv_embedded is most reliable on server IPs; ios/mweb as fallbacks
+    client_strategies = [
+        ('tv_embedded', ['tv_embedded']),
+        ('ios', ['ios']),
+        ('mweb', ['mweb']),
+        ('web', ['web']),
+    ]
+
     strategies = []
-
-    # Strategy 1: Use cookies.txt if it exists
-    if COOKIES_FILE.exists():
-        strategy_opts = ydl_opts.copy()
-        strategy_opts['cookiefile'] = str(COOKIES_FILE)
-        strategies.append(("cookies.txt file", strategy_opts))
-
-    # Strategy 2: Try Chrome browser cookies (only works locally)
-    # DISABLED: Chrome cookie extraction hangs on macOS due to Keychain issues
-    # chrome_check = Path.home() / '.config' / 'google-chrome'
-    # if chrome_check.exists() or Path('/Applications/Google Chrome.app').exists():
-    #     strategy_opts = ydl_opts.copy()
-    #     strategy_opts['cookiesfrombrowser'] = ('chrome',)
-    #     strategies.append(("Chrome browser cookies", strategy_opts))
-
-    # Strategy 3: Try without cookies (fallback)
-    strategies.append(("no authentication", ydl_opts.copy()))
+    for client_name, clients in client_strategies:
+        opts = dict(base_opts)
+        opts['extractor_args'] = {'youtube': {'player_client': clients}}
+        if COOKIES_FILE.exists():
+            opts['cookiefile'] = str(COOKIES_FILE)
+            strategies.append((f"{client_name} + cookies", opts))
+        else:
+            strategies.append((client_name, opts))
 
     print(f"  [download_from_youtube] Will try {len(strategies)} strategies", flush=True)
 
