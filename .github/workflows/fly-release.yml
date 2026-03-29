@@ -34,4 +34,4 @@ jobs:
         run: twine upload --repository-url $FLY_URL/artifactory/api/pypi/pypi dist/*
         env:
           TWINE_USERNAME: or@zerodouble.com
-          TWINE_PASSWORD: ${{ env.FLY_ACCESS_TOKEN }}
+          TWINE_PASSWORD: ${{ secrets.JFROG_TOKEN }}
