@@ -19,19 +19,19 @@ jobs:
       - name: Setup JFrog Fly
         uses: jfrog/fly-action@v1
 
-      - name: Build artifact
+      - name: Set version
         run: |
-          tar --exclude='.git' \
-              --exclude='__pycache__' \
-              --exclude='*.pyc' \
-              --exclude='tests' \
-              --exclude='*.png' \
-              -czf /tmp/dumb-music-player.tar.gz .
-          mv /tmp/dumb-music-player.tar.gz .
+          VERSION="1.0.${{ github.run_number }}"
+          sed -i "s/^version = .*/version = \"$VERSION\"/" pyproject.toml
 
-      - name: Upload release to Fly
-        uses: jfrog/fly-action/upload@v1
-        with:
-          name: dumb-music-player
-          version: ${{ github.sha }}
-          files: dumb-music-player.tar.gz
+      - name: Install build tools
+        run: pip install build twine
+
+      - name: Build package
+        run: python -m build
+
+      - name: Publish to Fly PyPI
+        run: twine upload --repository-url $FLY_URL/artifactory/api/pypi/pypi dist/*
+        env:
+          TWINE_USERNAME: or@zerodouble.com
+          TWINE_PASSWORD: ${{ env.FLY_ACCESS_TOKEN }}
