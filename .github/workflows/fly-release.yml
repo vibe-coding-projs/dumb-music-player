@@ -28,8 +28,8 @@ jobs:
               --exclude='*.pyc' \
               --exclude='tests' \
               --exclude='*.png' \
-              --exclude='./dumb-music-player.tar.gz' \
-              -czf dumb-music-player.tar.gz .
+              -czf /tmp/dumb-music-player.tar.gz .
+          mv /tmp/dumb-music-player.tar.gz .
 
       - name: Upload release to Fly
         uses: jfrog/fly-action/upload@v1
