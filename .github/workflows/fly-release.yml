@@ -35,3 +35,10 @@ jobs:
         env:
           TWINE_USERNAME: or@zerodouble.com
           TWINE_PASSWORD: ${{ secrets.JFROG_TOKEN }}
+
+      - name: Register release in Fly
+        uses: jfrog/fly-action/upload@v1
+        with:
+          name: dumb-music-player
+          version: 1.0.${{ github.run_number }}
+          files: dist/dumb_music_player-1.0.${{ github.run_number }}-py3-none-any.whl
