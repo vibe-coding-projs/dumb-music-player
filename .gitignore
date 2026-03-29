@@ -1,4 +1,6 @@
 .env
+.pip.conf
+.envrc
 __pycache__/
 *.pyc
 .DS_Store

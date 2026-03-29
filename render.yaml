@@ -11,3 +11,5 @@ services:
         generateValue: true
       - key: PYTHON_VERSION
         value: 3.11.0
+      - key: PIP_INDEX_URL
+        sync: false
