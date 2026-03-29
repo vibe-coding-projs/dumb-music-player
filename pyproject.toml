@@ -1,0 +1,20 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "dumb-music-player"
+version = "1.0.0"
+description = "A simple music player web app"
+requires-python = ">=3.11"
+dependencies = [
+    "Flask==3.0.0",
+    "yt-dlp>=2025.1.0",
+    "requests==2.31.0",
+    "python-dotenv==1.0.0",
+    "gunicorn==21.2.0",
+]
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["app*", "static*", "templates*"]
