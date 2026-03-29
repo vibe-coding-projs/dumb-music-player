@@ -28,6 +28,7 @@ jobs:
               --exclude='*.pyc' \
               --exclude='tests' \
               --exclude='*.png' \
+              --exclude='./dumb-music-player.tar.gz' \
               -czf dumb-music-player.tar.gz .
 
       - name: Upload release to Fly
