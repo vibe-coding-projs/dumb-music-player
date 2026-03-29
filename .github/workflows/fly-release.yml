@@ -21,18 +21,18 @@ jobs:
         with:
           environment: production
 
-      - name: Package app
+      - name: Build artifact
         run: |
-          zip -r dumb-music-player.zip . \
-            --exclude "*.git*" \
-            --exclude "__pycache__/*" \
-            --exclude "*.pyc" \
-            --exclude "tests/*" \
-            --exclude "*.png"
+          tar --exclude='.git' \
+              --exclude='__pycache__' \
+              --exclude='*.pyc' \
+              --exclude='tests' \
+              --exclude='*.png' \
+              -czf dumb-music-player.tar.gz .
 
       - name: Upload release to Fly
         uses: jfrog/fly-action/upload@v1
         with:
           name: dumb-music-player
           version: ${{ github.sha }}
-          files: dumb-music-player.zip
+          files: dumb-music-player.tar.gz
