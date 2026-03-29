@@ -166,3 +166,4 @@ The app tries multiple strategies in order:
 ## License
 
 MIT License - feel free to modify and use as needed.
+# Test PyPI upload א' מרץ 29 16:42:55 IDT 2026
