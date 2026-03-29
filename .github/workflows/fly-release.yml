@@ -18,8 +18,6 @@ jobs:
 
       - name: Setup JFrog Fly
         uses: jfrog/fly-action@v1
-        with:
-          environment: production
 
       - name: Build artifact
         run: |
