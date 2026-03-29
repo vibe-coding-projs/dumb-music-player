@@ -2,7 +2,7 @@ services:
   - type: web
     name: dumb-music-player
     runtime: python
-    buildCommand: pip install -r requirements.txt
+    buildCommand: pip install dumb-music-player --no-cache-dir
     startCommand: gunicorn --workers 4 --timeout 300 --bind 0.0.0.0:$PORT app:app
     envVars:
       - key: ADMIN_PASSWORD
@@ -11,3 +11,5 @@ services:
         generateValue: true
       - key: PYTHON_VERSION
         value: 3.11.0
+      - key: PIP_INDEX_URL
+        sync: false
