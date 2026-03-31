@@ -5,7 +5,7 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "dumb-music-player"
 version = "1.0.0"
-description = "A simple music player web app"
+description = "A simple music player web app - test CI"
 requires-python = ">=3.11"
 dependencies = [
     "Flask==3.0.0",
