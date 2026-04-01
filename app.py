@@ -128,23 +128,26 @@ def download_from_youtube(youtube_url, output_path, thumbnail_path=None):
         },
     }
 
-    # Build strategies: each tries a different player_client, with and without cookies
-    # tv_embedded is most reliable on server IPs; ios/mweb as fallbacks
-    client_strategies = [
-        ('tv_embedded', ['tv_embedded']),
-        ('ios', ['ios']),
-        ('mweb', ['mweb']),
-        ('web', ['web']),
-    ]
-
+    # Build strategies based on whether cookies are available.
+    # When cookies exist, try 'web' first — it's the only client that actually
+    # authenticates with browser cookies. tv_embedded/ios bypass bot detection
+    # without cookies but ignore them when present.
     strategies = []
-    for client_name, clients in client_strategies:
-        opts = dict(base_opts)
-        opts['extractor_args'] = {'youtube': {'player_client': clients}}
-        if COOKIES_FILE.exists():
+
+    if COOKIES_FILE.exists():
+        # Cookies available: web+cookies is most likely to succeed
+        cookie_clients = [('web', ['web']), ('tv_embedded', ['tv_embedded']), ('ios', ['ios']), ('mweb', ['mweb'])]
+        for client_name, clients in cookie_clients:
+            opts = dict(base_opts)
+            opts['extractor_args'] = {'youtube': {'player_client': clients}}
             opts['cookiefile'] = str(COOKIES_FILE)
             strategies.append((f"{client_name} + cookies", opts))
-        else:
+    else:
+        # No cookies: tv_embedded is most reliable on server IPs
+        no_cookie_clients = [('tv_embedded', ['tv_embedded']), ('ios', ['ios']), ('mweb', ['mweb']), ('web', ['web'])]
+        for client_name, clients in no_cookie_clients:
+            opts = dict(base_opts)
+            opts['extractor_args'] = {'youtube': {'player_client': clients}}
             strategies.append((client_name, opts))
 
     print(f"  [download_from_youtube] Will try {len(strategies)} strategies", flush=True)

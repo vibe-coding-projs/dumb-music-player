@@ -23,14 +23,61 @@
     <h2>מה זה Cookies ולמה צריך אותם?</h2>
     <p>YouTube Cookies מאפשרים להוריד שירים שמוגבלים גיאוגרפית או דורשים אימות.</p>
 
-    <h3>אפשרות 1 — Cookie header גולמי (ללא תוסף, מומלץ!)</h3>
-    <ol style="line-height: 1.8;">
-        <li>פתח YouTube בדפדפן → לחץ F12 → לשונית <strong>Network</strong></li>
-        <li>רענן את הדף ולחץ על כל בקשה ל-youtube.com</li>
-        <li>תחת <strong>Request Headers</strong> → מצא את השורה <code>Cookie:</code></li>
-        <li>העתק את <strong>הערך בלבד</strong> (ה-key=value; key2=value2...)</li>
-        <li>הדבק בתיבת הטקסט למטה — המערכת תמיר אוטומטית לפורמט הנכון</li>
-    </ol>
+    <h3>אפשרות 1 — העתקה מ-Chrome DevTools (ללא תוסף, מומלץ!)</h3>
+
+    <div style="background: #f8f9fa; border-radius: 8px; padding: 16px; margin: 10px 0;">
+
+        <div style="display: flex; align-items: flex-start; margin-bottom: 14px; gap: 12px;">
+            <div style="background: #0d6efd; color: white; border-radius: 50%; width: 28px; height: 28px; display: flex; align-items: center; justify-content: center; font-weight: bold; flex-shrink: 0;">1</div>
+            <div>
+                פתח <strong>youtube.com</strong> בדפדפן Chrome, לחץ על המקש <kbd style="background:#e9ecef;border:1px solid #ccc;border-radius:3px;padding:1px 5px;font-family:monospace;">F12</kbd> לפתיחת DevTools, ולחץ על הלשונית <strong>Network</strong> (רשת) בחלק העליון של הכלים.
+            </div>
+        </div>
+
+        <div style="display: flex; align-items: flex-start; margin-bottom: 14px; gap: 12px;">
+            <div style="background: #0d6efd; color: white; border-radius: 50%; width: 28px; height: 28px; display: flex; align-items: center; justify-content: center; font-weight: bold; flex-shrink: 0;">2</div>
+            <div>
+                בסרגל הפילטרים שמתחת ללשוניות, לחץ על <strong>Doc</strong> (קיצור של Document). זה מסנן ומציג רק את הבקשה הראשית של הדף — רק בה יש cookies.
+                <br><span style="color: #6c757d; font-size: 13px;">אם אינך רואה "Doc" — חפש את הכפתורים: All / Fetch/XHR / JS / CSS / Img / <strong>Doc</strong></span>
+            </div>
+        </div>
+
+        <div style="display: flex; align-items: flex-start; margin-bottom: 14px; gap: 12px;">
+            <div style="background: #0d6efd; color: white; border-radius: 50%; width: 28px; height: 28px; display: flex; align-items: center; justify-content: center; font-weight: bold; flex-shrink: 0;">3</div>
+            <div>
+                לחץ <kbd style="background:#e9ecef;border:1px solid #ccc;border-radius:3px;padding:1px 5px;font-family:monospace;">F5</kbd> לרענון הדף. תראה בקשה אחת בשם <code style="background:#e9ecef;padding:1px 4px;border-radius:3px;">www.youtube.com</code> — לחץ עליה.
+            </div>
+        </div>
+
+        <div style="display: flex; align-items: flex-start; margin-bottom: 14px; gap: 12px;">
+            <div style="background: #0d6efd; color: white; border-radius: 50%; width: 28px; height: 28px; display: flex; align-items: center; justify-content: center; font-weight: bold; flex-shrink: 0;">4</div>
+            <div>
+                בפאנל שנפתח מימין, לחץ על הלשונית <strong>Headers</strong>. גלול מטה עד לחלק <strong>Request Headers</strong>. תראה שורה שמתחילה ב־<code style="background:#e9ecef;padding:1px 4px;border-radius:3px;">cookie:</code> עם ערך ארוך מאוד.
+                <br><span style="color: #6c757d; font-size: 13px;">אין שורת cookie? ודא שאתה מחובר ל-YouTube לפני הרענון.</span>
+            </div>
+        </div>
+
+        <div style="display: flex; align-items: flex-start; margin-bottom: 14px; gap: 12px;">
+            <div style="background: #0d6efd; color: white; border-radius: 50%; width: 28px; height: 28px; display: flex; align-items: center; justify-content: center; font-weight: bold; flex-shrink: 0;">5</div>
+            <div>
+                לחץ לחיצה ימנית על הערך שליד <code style="background:#e9ecef;padding:1px 4px;border-radius:3px;">cookie:</code> ← בחר <strong>Copy value</strong> (העתק ערך). <br>
+                <span style="color: #6c757d; font-size: 13px;">⚠️ העתק רק את הערך — לא את המילה "cookie:" עצמה.</span>
+            </div>
+        </div>
+
+        <div style="display: flex; align-items: flex-start; gap: 12px;">
+            <div style="background: #198754; color: white; border-radius: 50%; width: 28px; height: 28px; display: flex; align-items: center; justify-content: center; font-weight: bold; flex-shrink: 0;">✓</div>
+            <div>
+                הדבק את הערך שהעתקת בתיבת הטקסט למטה ולחץ <strong>שמור</strong>. המערכת תמיר אוטומטית לפורמט הנכון.
+                <br><span style="color: #6c757d; font-size: 13px;">הערך שהעתקת נראה כך: <code style="background:#e9ecef;padding:1px 4px;border-radius:3px;">YSC=abc123; VISITOR_INFO1_LIVE=xyz; SID=...</code></span>
+            </div>
+        </div>
+
+    </div>
+
+    <div style="margin-top: 10px; background: #f8d7da; border: 1px solid #f5c2c7; border-radius: 6px; padding: 10px 14px; font-size: 13px;">
+        ⚠️ <strong>שימו לב:</strong> יש להעתיק את הערך מלשונית <strong>Network → Headers</strong> בלבד (שיטה מעלה). שיטות אחרות כמו <code style="background:#e9ecef;padding:1px 4px;border-radius:3px;">document.cookie</code> בקונסול <strong>לא עובדות</strong> — הן מפספסות את ה-cookies החשובים ביותר (httpOnly) שיוטיוב משתמש בהם לאימות.
+    </div>
 
     <h3 style="margin-top: 20px;">אפשרות 2 — פורמט Netscape (cookies.txt)</h3>
     <ol style="line-height: 1.8;">
